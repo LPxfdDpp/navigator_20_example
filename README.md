@@ -4,7 +4,8 @@
 
 Navigator 2.0 Pages API example and Router example.
 
-The main point of these examples is to show how to extract basic navigation logic to separate class (e.g. ChangeNotifier). I'm using 2 approaches:
+The main point of these examples is to show how to extract basic navigation logic 
+to separate class (e.g. ChangeNotifier). I'm using 2 approaches:
 
 - Pages API
 - Router widget
@@ -13,19 +14,24 @@ Both of them use separate `PageManager` (or `RoutePageManager`) to handle naviga
 
 ## Pages API
 
-Navigator's Pages API is a convenient way to declaratively set navigation stack in your Flutter app. Take a look at the `main.dart` entry point and please notice custom `PageManager` class that is handling list of pages provided to `Navigator`.
+Navigator's Pages API is a convenient way to declaratively set navigation stack in
+ your Flutter app. Take a look at the `main.dart` entry point and please notice 
+ custom `PageManager` class that is handling list of pages provided to `Navigator`.
 
 ![](docs/pages.gif)
 
 ## Router widget
 
-For more complex and robust needs you may use the Router widget. Simple implementation can be found in `main_router.dart` entry point. Take a look at the custom `TheAppPath` class storing typed path information and `RoutePageManager` handling list of pages provided to the `Navigator`.
+For more complex and robust needs you may use the Router widget. Simple implementation 
+can be found in `main_router.dart` entry point. Take a look at the custom `TheAppPath` class 
+storing typed path information and `RoutePageManager` handling list of pages provided to the `Navigator`.
 
 ![](docs/router.gif)
 
 ### Web address handling
 
-Because the `RoutePageManager` is notifying the `Router` about its changes and the `currentPath` is used as `currentConfiguration` the address bar in the browser is reflecting the stack changes:
+Because the `RoutePageManager` is notifying the `Router` about its changes and 
+the `currentPath` is used as `currentConfiguration` the address bar in the browser is reflecting the stack changes:
 
 ```dart
   @override

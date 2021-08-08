@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../main_router.dart';
+import 'package:navigator_example/kkk/main_kkk.dart';
+import 'package:navigator_example/kkk/navigator2/page_manager.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -19,7 +20,13 @@ class MainScreen extends StatelessWidget {
             OutlineButton(
               child: Text('Open Details'),
               onPressed: () {
-                RoutePageManager.of(context).openDetails();
+                PageManager.of(context).openDetails();
+              },
+            ),
+            OutlineButton(
+              child: Text('Open Tabs'),
+              onPressed: () {
+                PageManager.of(context).openTabs();
               },
             ),
           ],
