@@ -1,22 +1,13 @@
-abstract class BaseAppPathAndInfo{}
+import 'package:flutter/material.dart';
+import 'package:navigator_example/router/details_screen.dart';
+import 'package:navigator_example/router/tab_page.dart';
 
+class AppPath {
 
-class HomeAppPathAndInfo extends BaseAppPathAndInfo {}
+  static Map<String,MaterialPage Function({Map<String,String>? params,Map<String,dynamic>? arguments})> appPagePath = {
+    DetailsScreen.appPath:DetailsScreen.generatePage,
+    MyTabPage.appPath:MyTabPage.generatePage
+  };
 
-class DetailAppPathAndInfo extends BaseAppPathAndInfo {
-
-  final int id;
-
-  DetailAppPathAndInfo(this.id);
 
 }
-class UnknownAppPathAndInfo extends BaseAppPathAndInfo {}
-
-class TabAppPathAndInfo extends BaseAppPathAndInfo {
-
-  final int index;
-
-  TabAppPathAndInfo(this.index);
-
-}
-

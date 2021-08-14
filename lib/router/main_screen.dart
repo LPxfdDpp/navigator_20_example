@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
-import 'package:navigator_example/kkk/main_kkk.dart';
+import 'package:navigator_example/main_kkk.dart';
 import 'package:navigator_example/kkk/navigator2/page_manager.dart';
+import 'package:navigator_example/router/details_screen.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -16,17 +16,16 @@ class MainScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Main Router Screen'),
-            Gap(20),
             OutlineButton(
               child: Text('Open Details'),
               onPressed: () {
-                PageManager.of(context).openDetails();
+                PageManager.of(context).pushPage(DetailsScreen.appPath,params: {"id":"100"},);
               },
             ),
             OutlineButton(
               child: Text('Open Tabs'),
               onPressed: () {
-                PageManager.of(context).openTabs();
+                // PageManager.of(context).openTabs();
               },
             ),
           ],

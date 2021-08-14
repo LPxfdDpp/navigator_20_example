@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:navigator_example/kkk/navigator2/app_path.dart';
 import 'package:navigator_example/kkk/navigator2/page_manager.dart';
 import 'package:provider/provider.dart';
 
-class AppRouterDelegate extends RouterDelegate<BaseAppPathAndInfo>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<BaseAppPathAndInfo> {
+class AppRouterDelegate extends RouterDelegate<RouteInformation>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteInformation> {
   AppRouterDelegate() {
     pageManager.addListener(notifyListeners);
   }
@@ -32,7 +31,7 @@ class AppRouterDelegate extends RouterDelegate<BaseAppPathAndInfo>
       return false;
     }
 
-    pageManager.didPop(route.settings);
+    pageManager.didPop(route,result);
 
     return true;
   }
@@ -41,10 +40,10 @@ class AppRouterDelegate extends RouterDelegate<BaseAppPathAndInfo>
   GlobalKey<NavigatorState> get navigatorKey => pageManager.navigatorKey;
 
   @override
-  BaseAppPathAndInfo get currentConfiguration => pageManager.currentPath;
+  RouteInformation get currentConfiguration => pageManager.currentPath;
 
   @override
-  Future<void> setNewRoutePath(BaseAppPathAndInfo configuration) async {
-    await pageManager.setNewRoutePath(configuration);
+  Future<void> setNewRoutePath(RouteInformation routeInformation) async {
+    await pageManager.setNewRoutePath(routeInformation);
   }
 }

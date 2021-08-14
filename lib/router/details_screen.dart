@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:navigator_example/kkk/main_kkk.dart';
+import 'package:navigator_example/main_kkk.dart';
+import 'package:navigator_example/kkk/navigator2/app_path.dart';
 
 import 'package:navigator_example/kkk/navigator2/page_manager.dart';
+import 'package:navigator_example/router/tab_page.dart';
 
 class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({Key key, this.id}) : super(key: key);
+   DetailsScreen({Key? key,
+
+    required this.id,
+     this.arguments
+   }) : super(key: key);
   final int id;
+
+  final Map<String,dynamic>? arguments;
+
+  static String appPath = "/details_screen";
+
+   static MaterialPage Function({Map<String,String>? params,Map<String,dynamic>? arguments}) generatePage = ({Map<String,String>? params,Map<String,dynamic>? arguments}) {
+    final arguments_ = arguments??<String,dynamic>{};
+    return MaterialPage(
+          child: DetailsScreen(id: int.parse(params!['id']!),arguments: arguments_,),
+          key: UniqueKey(),
+          name: appPath+"?id=${int.parse(params['id']!)}",
+          arguments: arguments_
+      );
+  };
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
@@ -19,7 +38,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final args = ModalRoute.of(context).settings.arguments;
+    final args = ModalRoute.of(context)!.settings.arguments;
     print("传输过来的参数为：");
     print(args);
   }
@@ -32,36 +51,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
         title: Text('Details ${widget.id}'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '${widget.id}',
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            Gap(20),
-            OutlineButton(
-              child: Text('Open Details'),
-              onPressed: () {
-                PageManager.of(context).openDetails();
-              },
-            ),
-            Gap(20),
-            OutlineButton(
-              child: Text('Reset to home'),
-              onPressed: () {
-                PageManager.of(context).resetToHome();
-              },
-            ),
-            Gap(20),
-            OutlineButton(
-              child: Text('Add new Details below'),
-              onPressed: () {
-                PageManager.of(context).addDetailsBelow();
-              },
-            ),
-          ],
-        ),
+        child: OutlineButton(
+        child: Text('tttttttt'),
+      onPressed: () {
+        PageManager.of(context).pushPage(MyTabPage.appPath,params: {"index":"0"},);
+      },
+    ),
       ),
     );
   }

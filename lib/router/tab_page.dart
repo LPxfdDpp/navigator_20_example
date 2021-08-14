@@ -4,28 +4,39 @@ import 'package:navigator_example/kkk/navigator2/navigator2.dart';
 class MyTabPage extends StatefulWidget {
   final int index;
 
-  const MyTabPage(this.index,{Key key, }) : super(key: key);
+    MyTabPage({Key? key,
+
+    required this.index,
+      this.arguments
+    }) : super(key: key);
+
+  final Map<String,dynamic>? arguments;
+
+  static String appPath = "/my_tab_Page";
+
+  static MaterialPage Function({Map<String,String>? params,Map<String,dynamic>? arguments}) generatePage = ({Map<String,String>? params,Map<String,dynamic>? arguments}) {
+    final arguments_ = arguments??<String,dynamic>{};
+    return MaterialPage(
+        child: MyTabPage(index: int.parse(params!['index']!),arguments: arguments_,),
+        key: UniqueKey(),
+        name: appPath+"?index=${int.parse(params['index']!)}",
+        arguments: arguments_
+    );
+  };
+
+
+
   @override
   MyTabPageState createState() => MyTabPageState();
 }
 
 class MyTabPageState extends State<MyTabPage> with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  late TabController _tabController;
 
-  ChildBackButtonDispatcher _childBackButtonDispatcher;
-  Function callback = () async{
-    print("klkklklkl");
-
-    return false;
-  };
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this,initialIndex: widget.index);
-
-
-    _childBackButtonDispatcher = rootBackButtonDispatcher.createChildBackButtonDispatcher()..addCallback(callback);
-    _childBackButtonDispatcher.takePriority();
   }
 
   @override
@@ -40,6 +51,9 @@ class MyTabPageState extends State<MyTabPage> with SingleTickerProviderStateMixi
       appBar: AppBar(
         bottom: TabBar(
           controller: _tabController,
+          onTap: (index){
+
+          },
           tabs: [
             Tab(icon: Icon(Icons.directions_car)),
             Tab(icon: Icon(Icons.directions_transit)),
