@@ -21,7 +21,7 @@ class TheApp extends StatelessWidget {
       ),
       routerDelegate: appRouterDelegate,
       routeInformationParser: appRouteInformationParser,
-      backButtonDispatcher: rootBackButtonDispatcher,
+      // backButtonDispatcher: rootBackButtonDispatcher,
     );
   }
 }

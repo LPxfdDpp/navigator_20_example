@@ -10,17 +10,17 @@ class MyTabPage extends StatefulWidget {
       this.arguments
     }) : super(key: key);
 
-  final Map<String,dynamic>? arguments;
+  final Object? arguments;
 
   static String appPath = "/my_tab_Page";
 
-  static MaterialPage Function({Map<String,String>? params,Map<String,dynamic>? arguments}) generatePage = ({Map<String,String>? params,Map<String,dynamic>? arguments}) {
-    final arguments_ = arguments??<String,dynamic>{};
+  static MaterialPage Function({Map<String,String>? params,Object? arguments}) generatePage = ({Map<String,String>? params,Object? arguments}) {
+    // final arguments_ = arguments??<String,Object>{};
     return MaterialPage(
-        child: MyTabPage(index: int.parse(params!['index']!),arguments: arguments_,),
+        child: MyTabPage(index: int.parse(params!['index']!),arguments: arguments,),
         key: UniqueKey(),
         name: appPath+"?index=${int.parse(params['index']!)}",
-        arguments: arguments_
+        arguments: arguments
     );
   };
 

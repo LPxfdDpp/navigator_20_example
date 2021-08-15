@@ -19,7 +19,7 @@ class MainScreen extends StatelessWidget {
             OutlineButton(
               child: Text('Open Details'),
               onPressed: () {
-                PageManager.of(context).pushPage(DetailsScreen.appPath,params: {"id":"100"},);
+                PageManager.of(context).pushPage(DetailsScreen.appPath,params: {"id":"100"},arguments:{"a":100,"b":"sss","c":90.99,"d":true});
               },
             ),
             OutlineButton(

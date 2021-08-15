@@ -18,6 +18,7 @@ class PageManager extends ChangeNotifier {
       child: MainScreen(),
       key: const ValueKey('MainScreen'),
       name: '/',
+      arguments: {AppPath.APAT:DateTime.now().millisecondsSinceEpoch}
     ),
   ];
 
@@ -45,7 +46,22 @@ class PageManager extends ChangeNotifier {
   Future<void> setNewRoutePath(RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location!);
     if(uri.path != '/'){
-      _pages.add(AppPath.appPagePath[uri.path]!.call(params:uri.queryParameters,arguments:(routeInformation.state == null)?null:(routeInformation.state as Map<String,dynamic>)));
+      if(routeInformation.state == null){//web改变浏览器地址的方式进来的
+
+        _pages.add(AppPath.appPagePath[uri.path]!.call(params:uri.queryParameters,arguments:routeInformation.state));
+      }
+      //app通过[pushPage]进来的
+      else{
+        //根据时间戳判断当前是 添加 还是 移除 page
+        if(_pages.indexWhere((element) => (element.arguments! as Map)[AppPath.APAT] == (routeInformation.state! as Map)[AppPath.APAT]) == -1){
+          _pages.add(AppPath.appPagePath[uri.path]!.call(params:uri.queryParameters,arguments:routeInformation.state));
+        }else{
+          _pages.removeLast();
+        }
+      }
+
+    }else{
+      _pages.removeRange(1, _pages.length);
     }
 
     notifyListeners();
@@ -62,7 +78,8 @@ class PageManager extends ChangeNotifier {
   //   setNewRoutePath(HomeAppPathAndInfo());
   // }
 
-  pushPage(String appPath,{Map<String,String>? params,Map<String,dynamic>? arguments}){
+  ///app添加page的方法
+  pushPage(String appPath,{Map<String,String>? params,Map<String,Object>? arguments}){
     if(params != null){
       appPath += "?";
       params.entries.forEach((element) {
@@ -70,6 +87,15 @@ class PageManager extends ChangeNotifier {
       });
       appPath = appPath.substring(0,appPath.length-1);
 
+    }
+
+    //页面添加的时间戳
+    if(arguments == null){
+      arguments = {
+        AppPath.APAT:DateTime.now().millisecondsSinceEpoch
+      };
+    }else{
+      arguments[AppPath.APAT] = DateTime.now().millisecondsSinceEpoch;
     }
     setNewRoutePath(RouteInformation(location: appPath,state: arguments));
   }
