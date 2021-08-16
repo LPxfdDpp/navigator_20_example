@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:navigator_example/kkk/navigator2/app_path.dart';
 import 'package:provider/provider.dart';
@@ -38,27 +40,37 @@ class PageManager extends ChangeNotifier {
     //
     // _pages.remove(_pages.lastWhere((element) => element.name==route.settings.name));
 
+    appPathResults[(route.settings.arguments! as Map)[AppPath.APAT]]!.complete();
+    appPathResults.remove((route.settings.arguments! as Map)[AppPath.APAT]);
+
     _pages.removeLast();
 
     notifyListeners();
   }
 
+  final Map<int,Completer> appPathResults = {};
+
   Future<void> setNewRoutePath(RouteInformation routeInformation) async {
     final uri = Uri.parse(routeInformation.location!);
     if(uri.path != '/'){
-      if(routeInformation.state == null){//web改变浏览器地址的方式进来的
-
-        _pages.add(AppPath.appPagePath[uri.path]!.call(params:uri.queryParameters,arguments:routeInformation.state));
-      }
-      //app通过[pushPage]进来的
-      else{
+      // if(routeInformation.state == null){//web改变浏览器地址的方式进来的
+      //
+      //   _pages.add(AppPath.appPagePath[uri.path]!.call(params:uri.queryParameters,arguments:routeInformation.state));
+      // }
+      // //app通过[pushPage]进来的
+      // else{
         //根据时间戳判断当前是 添加 还是 移除 page
         if(_pages.indexWhere((element) => (element.arguments! as Map)[AppPath.APAT] == (routeInformation.state! as Map)[AppPath.APAT]) == -1){
+          appPathResults[(routeInformation.state! as Map)[AppPath.APAT]] = Completer();
+
           _pages.add(AppPath.appPagePath[uri.path]!.call(params:uri.queryParameters,arguments:routeInformation.state));
         }else{
+          appPathResults[(routeInformation.state! as Map)[AppPath.APAT]]!.complete();
+          appPathResults.remove((routeInformation.state! as Map)[AppPath.APAT]);
+
           _pages.removeLast();
         }
-      }
+      // }
 
     }else{
       _pages.removeRange(1, _pages.length);

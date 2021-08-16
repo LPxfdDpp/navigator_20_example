@@ -20,6 +20,7 @@ class TheApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routerDelegate: appRouterDelegate,
+      routeInformationProvider: appRouteInformationProvider,
       routeInformationParser: appRouteInformationParser,
       // backButtonDispatcher: rootBackButtonDispatcher,
     );
